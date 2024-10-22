@@ -15,8 +15,8 @@ private:
     string semester;
     int totalClasses;
     int attendedClasses;
-    string dateOfIssue;  // New member variable for date of issue
-    string gender;       // New member variable for gender
+    string dateOfIssue;  
+    string gender;       
 
 public:
     Student(string name, string branch, string year, string course, string btID, string semester, int totalClasses, int attendedClasses, string dateOfIssue, string gender) {
@@ -29,7 +29,7 @@ public:
         this->totalClasses = totalClasses;
         this->attendedClasses = attendedClasses;
         this->dateOfIssue = dateOfIssue;
-        this->gender = gender;  // Store gender information
+        this->gender = gender;  
     }
 
     float calculateAttendancePercentage() {
@@ -49,11 +49,12 @@ public:
         HPDF_Page page = HPDF_AddPage(pdf);
         HPDF_Page_SetSize(page, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
 
+        // Header image
         HPDF_Image png = HPDF_LoadPngImageFromFile(pdf, "header.png");
         if (!png) {
             cout << "ERROR: Cannot load PNG image." << endl;
         } else {
-            HPDF_Page_DrawImage(page, png, 50, 750, 500, 80);  // Draw the header image
+            HPDF_Page_DrawImage(page, png, 50, 750, 500, 80);  
         }
 
         HPDF_Page_MoveTo(page, 50, 740);
@@ -63,16 +64,15 @@ public:
         HPDF_Font font = HPDF_GetFont(pdf, "Helvetica", NULL);
         HPDF_Page_SetFontAndSize(page, font, 14);
 
-        // Text for IIITN Attendance on left and Date on right
+        //IIITN Attendance on left
         HPDF_Page_BeginText(page);
         HPDF_Page_TextOut(page, 50, 720, "IIITN Attendance/ 2024-25/");
 
-        // Align the date to the right (adjust x position as needed)
+        //Date on the right
         HPDF_Page_TextOut(page, 440, 720, ("Date: " + dateOfIssue).c_str());
         HPDF_Page_EndText(page);
 
-        // Male ya Female ke accordingly MR ya MS ko title me store kar denge!
-
+        // Male ya Female ke accordingly MR ya MS ko "title" variable me store kar denge!
         string title;
         if (gender == "M" || gender == "m") {
             title = "Mr.";
@@ -83,7 +83,8 @@ public:
 
         HPDF_Page_BeginText(page);
 
-        // Create a paragraph using the appropriate title (Mr./Ms.)
+        // paragraph 
+
         HPDF_Page_TextRect(page, 50, 670, 550, 570,
         ("This is to certify that (" + title + " " + name + ") (Enrollment Number " + btID + ") "
         "is a student of B.Tech, " + year + " year-A section (" + branch + " Department) at "
@@ -91,7 +92,7 @@ public:
         "for the " + semester + " semester till date is as follows:").c_str(), HPDF_TALIGN_JUSTIFY, NULL);
         HPDF_Page_EndText(page);
 
-        // Calculate attendance percentage and format it to two decimal places
+        // Calculate attendance percentage and format it to two decimal places 
         float attendancePercentage = calculateAttendancePercentage();
         string attendanceStr = to_string(attendancePercentage).substr(0, 5) + "%";
 

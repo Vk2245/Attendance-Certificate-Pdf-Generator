@@ -73,12 +73,14 @@ public:
         HPDF_Page_EndText(page);
 
         // Male ya Female ke accordingly MR ya MS ko "title" variable me store kar denge!
-        string title;
+        string title,pronoun;
         if (gender == "M" || gender == "m") {
             title = "Mr.";
+            pronoun="his";
         } 
         else {
             title = "Ms.";
+            pronoun = "her";
         }
 
         HPDF_Page_BeginText(page);
@@ -88,7 +90,7 @@ public:
         HPDF_Page_TextRect(page, 50, 670, 550, 570,
         ("This is to certify that (" + title + " " + name + ") (Enrollment Number " + btID + ") "
         "is a student of B.Tech, " + year + " year-A section (" + branch + " Department) at "
-        "Indian Institute of Information Technology Nagpur. As per records, his overall attendance "
+        "Indian Institute of Information Technology Nagpur. As per records, "+ pronoun + " overall attendance "
         "for the " + semester + " semester till date is as follows:").c_str(), HPDF_TALIGN_JUSTIFY, NULL);
         HPDF_Page_EndText(page);
 
